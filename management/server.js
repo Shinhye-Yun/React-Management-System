@@ -20,6 +20,9 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+const multer = require('multer'); //prevent duplicates on file names
+const upload = multer({dest: './upload'}); //image files
+
 //server connect to database - customer table
 app.get('/api/customer', (req, res)=>{
   connection.query(
@@ -30,5 +33,21 @@ app.get('/api/customer', (req, res)=>{
     }
   );
 });
+
+app.use('/image', express.static('./upload'));// '/image' url gets mapped to './upload' directory
+app.post('/api/customer', upload.single('image'), (req, res) => {
+  let sql = 'INSERT INTO CUSTOMER VALUES(null, ?, ?, ?, ?, ?, ?)';
+  let image = '/image/' + req.file.filename;
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let birthday = req.body.birthday;
+  let gender = req.body.gender;
+  let job = req.body.job;
+  let params = [image, firstName, lastName, birthday, gender, job];
+  connection.query(sql, params, (err, rows, fields) => {
+    console.log(err); 
+    res.send(rows);
+  });
+})
 
 app.listen(port, ()=> console.log(`Listening on port ${port}`));
