@@ -47,6 +47,7 @@ class CustomerAdd extends React.Component{
        //by updating state values, we can upload necessary part on the page
        //by passing data from parent component to child component in 'props' form
        //let's use the easiest way to do it: reuploading a list after updates
+        //hahaha
     }
 
     handleFileChange = (e) =>{
