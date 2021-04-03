@@ -54,7 +54,7 @@ class App extends React.Component{
   }
 
   callApi = async()=>{ // call api asyncronically
-    const response = await fetch('api/customers');
+    const response = await fetch('api/customer');
     const body = await response.json();
     return body;
   }
@@ -72,9 +72,10 @@ class App extends React.Component{
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
+              <TableCell>ID</TableCell>
               <TableCell>Profile</TableCell>
-              <TableCell>Name</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
               <TableCell>Birthday</TableCell>
               <TableCell>Gender</TableCell>
               <TableCell>Job</TableCell>
@@ -83,10 +84,10 @@ class App extends React.Component{
           <TableBody>
             {this.state.customers ? this.state.customers.map(c=>{
               return (
-              <Customer key={c.id} id={c.id} picture={c.picture} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>)
+              <Customer key={c.id} id={c.ID} image={c.Image} firstName={c.FirstName} lastName={c.LastName} birthday={c.Birthday} gender={c.Gender} job={c.Job}/>)
               ;}):
               <TableRow>
-                <TableCell colSpan="6" align="center">
+                <TableCell colSpan="7" align="center">
                   <CircularProgress className={classes.pregress} variant="determinate" value={this.state.completed}/>
                 </TableCell>
               </TableRow>
