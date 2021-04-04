@@ -27,10 +27,8 @@ class CustomerAdd extends React.Component{
             .then((response) => {
             //received response for connection from server
                 console.log(response.data);
-            })
-        /*
-        //temporary method to reload the whole page as data updated
-        //reset state empty
+                this.props.stateRefresh(); //method from parent (App.js)
+            });
         this.setState({
             file: null,
             firstName: '',
@@ -39,15 +37,14 @@ class CustomerAdd extends React.Component{
             gender:'',
             job:'',
             fileName:''
-        })
-        window.location.reload();
-        */
+        });
+        //window.location.reload();
        //react operates SPA-single page application
        //reuploading a whole page is inefficient.
        //by updating state values, we can upload necessary part on the page
        //by passing data from parent component to child component in 'props' form
        //let's use the easiest way to do it: reuploading a list after updates
-        //hahaha
+        
     }
 
     handleFileChange = (e) =>{
