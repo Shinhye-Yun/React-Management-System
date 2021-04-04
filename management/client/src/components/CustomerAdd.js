@@ -1,7 +1,21 @@
 //form to add customers
-
 import React from 'react';
 import {post} from 'axios';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { withStyles} from '@material-ui/core/styles';
+
+//desing style for modal 
+const styles = theme => ({
+    hidden: {
+        display: 'none'
+    }
+});
+
 
 class CustomerAdd extends React.Component{
     //constructor
@@ -14,7 +28,8 @@ class CustomerAdd extends React.Component{
             birthday:'',
             gender:'',
             job:'',
-            fileName:''
+            fileName:'',
+            open: false //to check if dialog winodw is oepned
         };
     }
 
@@ -36,7 +51,8 @@ class CustomerAdd extends React.Component{
             birthday:'',
             gender:'',
             job:'',
-            fileName:''
+            fileName:'',
+            open: false
         });
         //window.location.reload();
        //react operates SPA-single page application
@@ -80,10 +96,65 @@ class CustomerAdd extends React.Component{
     }
 
 
+    //modal window pop up
+    handleClickOpen = () => {
+        this.setState({
+            open: true
+        })
+    }
+
+    handleClickClose = () => {
+        this.setState({
+            file: null,
+            firstName: '',
+            lastName:'',
+            birthday:'',
+            gender:'',
+            job:'',
+            fileName:'',
+            open: false
+        });
+    }
 
     render(){
+        const {classes} = this.props; //for design class
         //form html when post requested
         return(
+            <div> 
+                <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
+                    Add Customer
+                </Button>
+                <Dialog open={this.state.open} onClose={this.handleClickClose}>
+                    <DialogTitle>
+                        Add New Customer
+                    </DialogTitle>
+                    <DialogContent>
+                        <input className={classes.hidden} accpet="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange}/>  
+                        <label htmlFor="raised-button-file">
+                            <Button variant="contained" color="primary" component="span" name="file">
+                                {this.state.fileName === "" ? "Choose profile image" : this.state.fileName}
+                            </Button>
+                        </label>
+                        <br/><br/>
+                        First name <br/><TextField type="text" name="firstName" value={this.state.firstName} onChange={this.handleValueChange}/>
+                        <br/><br/>
+                        Last name <br/><TextField type="text" name="lastName" value={this.state.lastName} onChange={this.handleValueChange}/>
+                        <br/><br/>
+                        Birthday <br/> <TextField type="date" name="birthday" value={this.state.birthday} onChange={this.handleValueChange}/>
+                        <br/><br/>
+                        Gender <br/><TextField type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange}/>
+                        <br/><br/>
+                        Job <br/><TextField type="text" name="job" value={this.state.job} onChange={this.handleValueChange}/>
+                        <br/>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>Add</Button>
+                        <Button variant="outlined" color="primary" onClick={this.handleClickClose}>Cancel</Button>
+                    </DialogActions>
+
+                </Dialog>
+            </div>
+            /*
             <form onSubmit={this.handleFormSubmit}>
                 <h1>Add customer</h1>
                 profile image: <input type="file" name="file" 
@@ -101,10 +172,11 @@ class CustomerAdd extends React.Component{
                 <br/>
                 <button type="submit">submit</button>
             </form>
+            */
         );
     }
 
 }
 
 
-export default CustomerAdd;
+export default withStyles(styles)(CustomerAdd);

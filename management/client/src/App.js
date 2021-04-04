@@ -95,12 +95,13 @@ class App extends React.Component{
                 <TableCell>Birthday</TableCell>
                 <TableCell>Gender</TableCell>
                 <TableCell>Job</TableCell>
+                <TableCell>Setting</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.customers ? this.state.customers.map(c=>{
                 return (
-                <Customer key={c.id} id={c.ID} image={c.Image} firstName={c.FirstName} lastName={c.LastName} birthday={c.Birthday} gender={c.Gender} job={c.Job}/>)
+                <Customer stateRefresh={this.stateRefresh} key={c.id} id={c.ID} image={c.Image} firstName={c.FirstName} lastName={c.LastName} birthday={c.Birthday} gender={c.Gender} job={c.Job}/>)
                 ;}):
                 <TableRow>
                   <TableCell colSpan="7" align="center">
